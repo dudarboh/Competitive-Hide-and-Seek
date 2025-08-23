@@ -107,13 +107,12 @@ The rest of the code should remain untouched. Your solution should be as easy as
 ### Detailed Constraints of the Implementation
 
 1. You cannot modify the imports. NumPy is the only external package that you have.
-
 2. Your class must inherit the `Player` class and have the same start of the constructor as the player class.
 3. You are not allowed to modify input arguments to the constructor. This is all information that is available to you.
 4. Your class must implement `move()` method that is repeatedly called in the game loop. It should change the player's position.
-5. Your `move()` method should move the play position only one cell at a time. No teleportation!
+5. Your `move()` method should move the player position only one cell at a time. No teleportation!
 6. Your `move()` method should not climb walls.
-7. Your `move()` method should escape the realm of the existing 20x20 world.
+7. Your `move()` method should not escape the realm of the existing 20x20 world.
 
 ```python
 def Seeker(Player):
