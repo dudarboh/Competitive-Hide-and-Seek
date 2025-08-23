@@ -5,7 +5,7 @@ def distance(pos1, pos2):
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
 
-def movement_rules_obided(game_map, old_pos, new_pos, player="Seeker"):
+def movement_rules_obided(game_map, old_pos, new_pos, player="Player"):
     # NOTE: only +1 move is allowed
     # NOTE: no climbing walls or going out of bounds
 
