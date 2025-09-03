@@ -3,7 +3,8 @@ import sys
 import numpy as np
 import time
 from map import Map
-from players import Seeker, Hider
+from seeker import Seeker
+from hider import Hider
 from game_utils import see_each_other, movement_rules_obided, get_seeker_spawn, get_hider_spawn
 
 
