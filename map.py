@@ -141,18 +141,19 @@ class Map:
         wall_cells = np.sum(self.nodes)
         return wall_cells / total_cells
 
-    def display_map(self, seeker_pos=None, hider_pos=None):
-        map_to_display = self.nodes.copy()
-        if seeker_pos is not None:
-            map_to_display[seeker_pos[0], seeker_pos[1]] = 2
-        if hider_pos is not None:
-            map_to_display[hider_pos[0], hider_pos[1]] = 3
+    def display_map(self):
         print(f"Map is generated with seed {self.seed}. Good connectivity? {self.good_graph_connectivity(self.nodes, self.connections)}. Wall fraction: {self.wall_fraction()}.")
-        print(map_to_display.T) # transpose to make x look horizontal.
+        display = ''
+        for y in range(self.height):
+            for x in range(self.width):
+                if self.nodes[x, y]:
+                    display += '#' + " "
+                else:
+                    display += '.' + " "
+            display += '\n'
+        print(display)
         print("0 - empty")
         print("1 - wall")
-        print("2 - seeker")
-        print("3 - hider")
 
 
 

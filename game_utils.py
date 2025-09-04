@@ -1,5 +1,13 @@
 import numpy as np
 
+class colors:
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    BLUE = '\033[34m'
+    ENDC = '\033[0m'
+
+
 def distance(pos1, pos2):
     # https://en.wikipedia.org/wiki/Taxicab_geometry
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
@@ -64,9 +72,8 @@ def see_each_other(game_map, seeker_pos, hider_pos):
         # Special case. Same column, vertical line, infinite slope
         for y in range(min(seeker_pos[1], hider_pos[1]) + 1, max(seeker_pos[1], hider_pos[1])):
             if game_map.nodes[seeker_pos[0], y] == 1:
-                print("Found a blocking wall on the line of sight. No vision.")
-                return False
-        return True
+                return False, (seeker_pos[0], y)
+        return True, (None, None)
 
     seeker_is_left = seeker_pos[0] < hider_pos[0]
     x_left = seeker_pos[0] if seeker_is_left else hider_pos[0]
@@ -108,8 +115,41 @@ def see_each_other(game_map, seeker_pos, hider_pos):
         x, y = node
         if game_map.nodes[x, y] == 1:
             # print("Found a blocking wall on the line of sight. No vision.")
-            return False
+            return False, (x, y)
 
     # print("No walls found on the line of sight.")
-    return True
+    return True, (None, None)
 
+def display_game_state(game_map, seeker_pos=None, hider_pos=None, step=None):
+    map_to_display = game_map.nodes.copy()
+    if seeker_pos is not None:
+        map_to_display[seeker_pos[0], seeker_pos[1]] = 2
+    if hider_pos is not None:
+        map_to_display[hider_pos[0], hider_pos[1]] = 3
+
+    vision, (wall_x, wall_y) = see_each_other(game_map, seeker_pos, hider_pos)
+
+    display = ''
+    for y in range(-1, game_map.height):
+        if y == -1:
+            display += '  ' + ''.join([f"{x:2d}" for x in range(game_map.width)]) + '\n'
+            continue
+        for x in range(-1, game_map.width):
+            if x == -1:
+                display += f"{y:2d} "
+                continue
+            if map_to_display[x, y] == 1:
+                if not vision and wall_x == x and wall_y == y:
+                    display += colors.RED + '#' + colors.ENDC + " "
+                else:
+                    display += colors.BLACK + '#' + colors.ENDC + " "
+            elif map_to_display[x, y] == 2:
+                display += f'{colors.GREEN}S{colors.ENDC}' + " "
+            elif map_to_display[x, y] == 3:
+                display += f'{colors.BLUE}H{colors.ENDC}' + " "
+            else:
+                display += '.' + " "
+        display += '\n'
+    print(display)
+    print(". - empty \t # - wall \t S - seeker \t H - hider")
+    print(f"Step # {step} \t vision - {vision}, wall - ({wall_x}, {wall_y})")

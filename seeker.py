@@ -58,13 +58,12 @@ class Seeker():
         backtraced_path.append((start_pos[0], start_pos[1]))
 
         backtraced_path.reverse()
-        print("BFS path from", start_pos, "to", goal_pos, "is:", backtraced_path)
         return backtraced_path
 
     def move(self):
         if self.enemy_is_visible:
-            print("Seeker sees the Hider at position:", self.enemy_pos)
-
+            pass
+            
         try:
             idx = self.path_to_victory.index(tuple(self.pos))
         except ValueError:

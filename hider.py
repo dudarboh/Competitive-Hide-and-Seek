@@ -19,7 +19,7 @@ class Hider():
     def move(self):
 
         if self.enemy_is_visible:
-            print("Hider sees the Seeker at position:", self.enemy_pos)
+            pass
 
         # Stationary target.
         next_pos = self.pos.copy()
