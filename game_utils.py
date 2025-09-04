@@ -140,9 +140,9 @@ def display_game_state(game_map, seeker_pos=None, hider_pos=None, step=None):
                 continue
             if map_to_display[x, y] == 1:
                 if not vision and wall_x == x and wall_y == y:
-                    display += colors.RED + '#' + colors.ENDC + " "
+                    display += colors.RED + '■' + colors.ENDC + " "
                 else:
-                    display += colors.BLACK + '#' + colors.ENDC + " "
+                    display += colors.BLACK + '■' + colors.ENDC + " "
             elif map_to_display[x, y] == 2:
                 display += f'{colors.GREEN}S{colors.ENDC}' + " "
             elif map_to_display[x, y] == 3:
@@ -151,5 +151,5 @@ def display_game_state(game_map, seeker_pos=None, hider_pos=None, step=None):
                 display += '.' + " "
         display += '\n'
     print(display)
-    print(". - empty \t # - wall \t S - seeker \t H - hider")
-    print(f"Step # {step} \t vision - {vision}, wall - ({wall_x}, {wall_y})")
+    print(". - empty \t ■ - wall \t S - seeker \t H - hider")
+    print(f"Step # {step} \t vision - {vision}")
